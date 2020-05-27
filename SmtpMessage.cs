@@ -11,33 +11,34 @@ namespace smtp_client
     public class SmtpMessage
     {
         public MimeKit.MimeMessage mimeMessage = new MimeKit.MimeMessage();
+        private string mailpartsFolder = @"C:\source_files\smtp_client\mailparts";
 
         public TextPart CreateHtmlPart()
         {
-            var hp = new TextPart("HTML")
+            string part = File.ReadAllText(mailpartsFolder + "\\html_part.txt");
+            if (!string.IsNullOrEmpty(part))
             {
-                Text = 
-@"< p > Hey Alice,< br >
-< p > What are you up to this weekend? Monica is throwing one of her parties on
-Saturday and I was hoping you could make it.< br >
-< p > Will you be my + 1 ?< br >
-< p > --Joey<br>"
-            };
-            return hp;
+                var hp = new TextPart("HTML")
+                {
+                    Text = part
+                };
+                return hp;
+            }
+            return new TextPart();
         }
 
         public TextPart CreateTextPart()
         {
-            var tp = new TextPart("Plain")
+            string part = File.ReadAllText(mailpartsFolder + "\\text_part.txt");
+            if (!string.IsNullOrEmpty(part))
             {
-                Text = 
-@"Intro
-Body line 1
-Body line2
-
-Greetings"
-            };
-            return tp;
+                var tp = new TextPart("Plain") {
+                    Text = part
+                };
+                    
+                return tp;
+            }
+            return new TextPart();
         }
 
         public MimePart CreateAttachment(string attachmentPath)
@@ -56,7 +57,8 @@ Greetings"
         {
             var textpart = CreateTextPart();
             var htmlpart = CreateHtmlPart();
-            var attachment = CreateAttachment(@"F:\source_files\smtp_client\Invoice#IN19103288.pdf");
+            var attachment = CreateAttachment(@"C:\source_files\smtp_client\mailparts\annotate.pdf");
+                //@"F:\source_files\smtp_client\Invoice#IN19103288.pdf");
 
             var alternative = new MultipartAlternative();
             alternative.Add(textpart);

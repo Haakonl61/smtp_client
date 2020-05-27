@@ -8,7 +8,7 @@ namespace smtp_client
 {
     public class SmtpClient
     {
-        EmailConfguration emailConfiguration;
+        public EmailConfguration emailConfiguration;
         public EmailClientService emailClient;
         public SmtpClient()
         {
@@ -16,7 +16,6 @@ namespace smtp_client
             //emailConfiguration.AddSMTP("192.168.200.12", 25, "Anonymous", "haakon.langballe@abgsc.no");
             emailConfiguration.AddSMTP("localhost", 25, "Anonymous", "haakon.langballe@abgsc.no");
             emailClient = new EmailClientService(emailConfiguration);
-
 
         }
     }

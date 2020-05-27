@@ -8,12 +8,13 @@ namespace smtp_client
 {
     public class EmailClientService : IEmailService
     {
-        private readonly IEmailConfiguration emailConfiguration;
         private readonly MailKit.Net.Smtp.SmtpClient smtpClient;
+        private EmailConfguration emailConfiguration;
 
-        public EmailClientService(IEmailConfiguration EmailConfiguration)
+        public EmailClientService(smtp_client.EmailConfguration _emailConfiguration)
         {
             smtpClient = new MailKit.Net.Smtp.SmtpClient();
+            emailConfiguration = _emailConfiguration;
         }
 
         public void Connect()
@@ -21,7 +22,7 @@ namespace smtp_client
             try
             {
                 smtpClient.Connect("localhost", 0, MailKit.Security.SecureSocketOptions.None);
-                //emailClient.Connect(_emailConfiguration.SmtpServer, _emailConfiguration.SmtpPort, false);
+                //emailClient.Connect(emailConfiguration.SmtpServer, emailConfiguration.SmtpPort, false);
             }
             catch (MailKit.Security.SslHandshakeException ex)
             {

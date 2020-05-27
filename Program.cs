@@ -4,6 +4,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
+/*
+ 
+
+Server
+	Server/host
+	Port
+
+Mime Headers
+	Sender
+	To
+	From
+	Subject
+
+
+Mailparts
+	Textpart
+	Htmlpart
+	Attachments
+*/
+
 namespace smtp_client
 {
     class Program
