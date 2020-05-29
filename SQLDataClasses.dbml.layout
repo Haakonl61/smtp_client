@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="SQLDataClasses">
+  <DataContextMoniker Name="/SQLDataClassesDataContext" />
+  <nestedChildShapes>
+    <classShape Id="9e105a9d-f362-4866-984d-aa59c4d64186" absoluteBounds="0.75, 1.75, 2, 1.9631982421875003">
+      <DataClassMoniker Name="/SQLDataClassesDataContext/smtp_mail_batch" />
+      <nestedChildShapes>
+        <elementListCompartment Id="bd9b74c8-9e5f-423c-a88a-71d6ffc59eaf" absoluteBounds="0.765, 2.21, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="a023146b-bff8-4d8f-ae63-0cf79f3eca71" absoluteBounds="3.5, 1, 2, 3.5016097005208326">
+      <DataClassMoniker Name="/SQLDataClassesDataContext/smtp_mail_batch_detail" />
+      <nestedChildShapes>
+        <elementListCompartment Id="e05c11e4-01af-47cc-a228-c24c73a6d7e0" absoluteBounds="3.515, 1.46, 1.9700000000000002, 2.941609700520833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(2.75 : 2.73159912109375); (3.5 : 2.73159912109375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/SQLDataClassesDataContext/smtp_mail_batch/smtp_mail_batch_smtp_mail_batch_detail" />
+      <nodes>
+        <classShapeMoniker Id="9e105a9d-f362-4866-984d-aa59c4d64186" />
+        <classShapeMoniker Id="a023146b-bff8-4d8f-ae63-0cf79f3eca71" />
+      </nodes>
+    </associationConnector>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

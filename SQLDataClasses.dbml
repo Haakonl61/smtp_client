@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="ABGSC_DW" Class="SQLDataClassesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=abg-db10-osl;Initial Catalog=ABGSC_DW;Integrated Security=True" SettingsObjectName="smtp_client.Settings" SettingsPropertyName="ABGSC_DWConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.smtp_mail_batch" Member="smtp_mail_batches">
+    <Type Name="smtp_mail_batch">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="smtp_server_host" Type="System.String" DbType="VarChar(1024)" CanBeNull="true" />
+      <Column Name="smtp_port" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="smtp_user" Type="System.String" DbType="VarChar(1024)" CanBeNull="true" />
+      <Column Name="smtp_password" Type="System.String" DbType="VarChar(1024)" CanBeNull="true" />
+      <Column Name="description" Type="System.String" DbType="VarChar(1024)" CanBeNull="true" />
+      <Association Name="smtp_mail_batch_smtp_mail_batch_detail" Member="smtp_mail_batch_details" ThisKey="ID" OtherKey="smtp_batch_ID" Type="smtp_mail_batch_detail" />
+    </Type>
+  </Table>
+  <Table Name="dbo.smtp_mail_batch_details" Member="smtp_mail_batch_details">
+    <Type Name="smtp_mail_batch_detail">
+      <Column Name="mail_id" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="smtp_batch_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="mime_sender" Type="System.String" DbType="VarChar(1024)" CanBeNull="true" />
+      <Column Name="mime_sender_name" Type="System.String" DbType="VarChar(1024)" CanBeNull="true" />
+      <Column Name="mime_from_list" Type="System.String" DbType="VarChar(1024)" CanBeNull="true" />
+      <Column Name="mime_from_name_list" Type="System.String" DbType="VarChar(1024)" CanBeNull="true" />
+      <Column Name="mime_to_list" Type="System.String" DbType="VarChar(1024)" CanBeNull="true" />
+      <Column Name="mime_to_name_list" Type="System.String" DbType="VarChar(1024)" CanBeNull="true" />
+      <Column Name="mime_cc_list" Type="System.String" DbType="VarChar(1024)" CanBeNull="true" />
+      <Column Name="mime_bcc_list" Type="System.String" DbType="VarChar(1024)" CanBeNull="true" />
+      <Column Name="mime_attachment_list" Type="System.String" DbType="VarChar(1024)" CanBeNull="true" />
+      <Column Name="mime_textpart" Type="System.String" DbType="VarChar(2048)" CanBeNull="true" />
+      <Column Name="mime_htmlpart" Type="System.String" DbType="VarChar(2048)" CanBeNull="true" />
+      <Column Name="mime_subject" Type="System.String" DbType="VarChar(1024)" CanBeNull="true" />
+      <Association Name="smtp_mail_batch_smtp_mail_batch_detail" Member="smtp_mail_batch" ThisKey="smtp_batch_ID" OtherKey="ID" Type="smtp_mail_batch" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>

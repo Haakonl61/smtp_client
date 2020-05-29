@@ -11,7 +11,8 @@ namespace smtp_client
     public class SmtpMessage
     {
         public MimeKit.MimeMessage mimeMessage = new MimeKit.MimeMessage();
-        private string mailpartsFolder = @"C:\source_files\smtp_client\mailparts";
+        private string mailpartsFolder = Settings.Default.MailpartsFolderPath;
+        //@"\source_files\smtp_client\mailparts";
 
         public TextPart CreateHtmlPart()
         {
@@ -53,16 +54,16 @@ namespace smtp_client
             return attachment;
         }
 
-        public void CreateMessage()
+        public void CreateMessage(string textpart, string htmlpart, string attachments)
         {
-            var textpart = CreateTextPart();
-            var htmlpart = CreateHtmlPart();
-            var attachment = CreateAttachment(@"C:\source_files\smtp_client\mailparts\annotate.pdf");
-                //@"F:\source_files\smtp_client\Invoice#IN19103288.pdf");
+            var _textpart = CreateTextPart();
+            var _htmlpart = CreateHtmlPart();
+            //var attachment = CreateAttachment(mailpartsFolder + "\\annotate.pdf");
+            var attachment = CreateAttachment(attachments);
 
             var alternative = new MultipartAlternative();
-            alternative.Add(textpart);
-            alternative.Add(htmlpart);
+            alternative.Add(_textpart);
+            alternative.Add(_htmlpart);
 
             var multipart = new Multipart("mixed");
             multipart.Add(alternative);
