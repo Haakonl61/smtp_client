@@ -33,6 +33,12 @@ namespace smtp_client
     partial void Insertsmtp_mail_batch(smtp_mail_batch instance);
     partial void Updatesmtp_mail_batch(smtp_mail_batch instance);
     partial void Deletesmtp_mail_batch(smtp_mail_batch instance);
+    partial void Insertsmtp_mail_detail(smtp_mail_detail instance);
+    partial void Updatesmtp_mail_detail(smtp_mail_detail instance);
+    partial void Deletesmtp_mail_detail(smtp_mail_detail instance);
+    partial void Insertsmtp_mail_batch_detail(smtp_mail_batch_detail instance);
+    partial void Updatesmtp_mail_batch_detail(smtp_mail_batch_detail instance);
+    partial void Deletesmtp_mail_batch_detail(smtp_mail_batch_detail instance);
     #endregion
 		
 		public SQLDataClassesDataContext() : 
@@ -73,6 +79,14 @@ namespace smtp_client
 			}
 		}
 		
+		public System.Data.Linq.Table<smtp_mail_detail> smtp_mail_details
+		{
+			get
+			{
+				return this.GetTable<smtp_mail_detail>();
+			}
+		}
+		
 		public System.Data.Linq.Table<smtp_mail_batch_detail> smtp_mail_batch_details
 		{
 			get
@@ -100,6 +114,10 @@ namespace smtp_client
 		
 		private string _description;
 		
+		private EntitySet<smtp_mail_detail> _smtp_mail_details;
+		
+		private EntitySet<smtp_mail_batch_detail> _smtp_mail_batch_details;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -120,6 +138,8 @@ namespace smtp_client
 		
 		public smtp_mail_batch()
 		{
+			this._smtp_mail_details = new EntitySet<smtp_mail_detail>(new Action<smtp_mail_detail>(this.attach_smtp_mail_details), new Action<smtp_mail_detail>(this.detach_smtp_mail_details));
+			this._smtp_mail_batch_details = new EntitySet<smtp_mail_batch_detail>(new Action<smtp_mail_batch_detail>(this.attach_smtp_mail_batch_details), new Action<smtp_mail_batch_detail>(this.detach_smtp_mail_batch_details));
 			OnCreated();
 		}
 		
@@ -243,6 +263,255 @@ namespace smtp_client
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="smtp_mail_batch_smtp_mail_detail", Storage="_smtp_mail_details", ThisKey="ID", OtherKey="smtp_mail_batch_id")]
+		public EntitySet<smtp_mail_detail> smtp_mail_details
+		{
+			get
+			{
+				return this._smtp_mail_details;
+			}
+			set
+			{
+				this._smtp_mail_details.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="smtp_mail_batch_smtp_mail_batch_detail", Storage="_smtp_mail_batch_details", ThisKey="ID", OtherKey="batch_ID")]
+		public EntitySet<smtp_mail_batch_detail> smtp_mail_batch_details
+		{
+			get
+			{
+				return this._smtp_mail_batch_details;
+			}
+			set
+			{
+				this._smtp_mail_batch_details.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_smtp_mail_details(smtp_mail_detail entity)
+		{
+			this.SendPropertyChanging();
+			entity.smtp_mail_batch = this;
+		}
+		
+		private void detach_smtp_mail_details(smtp_mail_detail entity)
+		{
+			this.SendPropertyChanging();
+			entity.smtp_mail_batch = null;
+		}
+		
+		private void attach_smtp_mail_batch_details(smtp_mail_batch_detail entity)
+		{
+			this.SendPropertyChanging();
+			entity.smtp_mail_batch = this;
+		}
+		
+		private void detach_smtp_mail_batch_details(smtp_mail_batch_detail entity)
+		{
+			this.SendPropertyChanging();
+			entity.smtp_mail_batch = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.smtp_mail_details")]
+	public partial class smtp_mail_detail : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID;
+		
+		private System.Nullable<int> _smtp_mail_batch_id;
+		
+		private string _mime_mail_to_list;
+		
+		private string _mime_mail_to_name_list;
+		
+		private string _mime_attachment_list;
+		
+		private EntityRef<smtp_mail_batch> _smtp_mail_batch;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void Onsmtp_mail_batch_idChanging(System.Nullable<int> value);
+    partial void Onsmtp_mail_batch_idChanged();
+    partial void Onmime_mail_to_listChanging(string value);
+    partial void Onmime_mail_to_listChanged();
+    partial void Onmime_mail_to_name_listChanging(string value);
+    partial void Onmime_mail_to_name_listChanged();
+    partial void Onmime_attachment_listChanging(string value);
+    partial void Onmime_attachment_listChanged();
+    #endregion
+		
+		public smtp_mail_detail()
+		{
+			this._smtp_mail_batch = default(EntityRef<smtp_mail_batch>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_smtp_mail_batch_id", DbType="Int")]
+		public System.Nullable<int> smtp_mail_batch_id
+		{
+			get
+			{
+				return this._smtp_mail_batch_id;
+			}
+			set
+			{
+				if ((this._smtp_mail_batch_id != value))
+				{
+					if (this._smtp_mail_batch.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onsmtp_mail_batch_idChanging(value);
+					this.SendPropertyChanging();
+					this._smtp_mail_batch_id = value;
+					this.SendPropertyChanged("smtp_mail_batch_id");
+					this.Onsmtp_mail_batch_idChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_mime_mail_to_list", DbType="VarChar(1024)")]
+		public string mime_mail_to_list
+		{
+			get
+			{
+				return this._mime_mail_to_list;
+			}
+			set
+			{
+				if ((this._mime_mail_to_list != value))
+				{
+					this.Onmime_mail_to_listChanging(value);
+					this.SendPropertyChanging();
+					this._mime_mail_to_list = value;
+					this.SendPropertyChanged("mime_mail_to_list");
+					this.Onmime_mail_to_listChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_mime_mail_to_name_list", DbType="VarChar(1024)")]
+		public string mime_mail_to_name_list
+		{
+			get
+			{
+				return this._mime_mail_to_name_list;
+			}
+			set
+			{
+				if ((this._mime_mail_to_name_list != value))
+				{
+					this.Onmime_mail_to_name_listChanging(value);
+					this.SendPropertyChanging();
+					this._mime_mail_to_name_list = value;
+					this.SendPropertyChanged("mime_mail_to_name_list");
+					this.Onmime_mail_to_name_listChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_mime_attachment_list", DbType="VarChar(1024)")]
+		public string mime_attachment_list
+		{
+			get
+			{
+				return this._mime_attachment_list;
+			}
+			set
+			{
+				if ((this._mime_attachment_list != value))
+				{
+					this.Onmime_attachment_listChanging(value);
+					this.SendPropertyChanging();
+					this._mime_attachment_list = value;
+					this.SendPropertyChanged("mime_attachment_list");
+					this.Onmime_attachment_listChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="smtp_mail_batch_smtp_mail_detail", Storage="_smtp_mail_batch", ThisKey="smtp_mail_batch_id", OtherKey="ID", IsForeignKey=true)]
+		public smtp_mail_batch smtp_mail_batch
+		{
+			get
+			{
+				return this._smtp_mail_batch.Entity;
+			}
+			set
+			{
+				smtp_mail_batch previousValue = this._smtp_mail_batch.Entity;
+				if (((previousValue != value) 
+							|| (this._smtp_mail_batch.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._smtp_mail_batch.Entity = null;
+						previousValue.smtp_mail_details.Remove(this);
+					}
+					this._smtp_mail_batch.Entity = value;
+					if ((value != null))
+					{
+						value.smtp_mail_details.Add(this);
+						this._smtp_mail_batch_id = value.ID;
+					}
+					else
+					{
+						this._smtp_mail_batch_id = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("smtp_mail_batch");
+				}
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -265,12 +534,14 @@ namespace smtp_client
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.smtp_mail_batch_details")]
-	public partial class smtp_mail_batch_detail
+	public partial class smtp_mail_batch_detail : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
-		private string _mail_id;
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
-		private int _smtp_batch_ID;
+		private int _ID;
+		
+		private System.Nullable<int> _batch_ID;
 		
 		private string _mime_sender;
 		
@@ -280,15 +551,9 @@ namespace smtp_client
 		
 		private string _mime_from_name_list;
 		
-		private string _mime_to_list;
-		
-		private string _mime_to_name_list;
-		
 		private string _mime_cc_list;
 		
 		private string _mime_bcc_list;
-		
-		private string _mime_attachment_list;
 		
 		private string _mime_textpart;
 		
@@ -296,38 +561,82 @@ namespace smtp_client
 		
 		private string _mime_subject;
 		
+		private EntityRef<smtp_mail_batch> _smtp_mail_batch;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void Onbatch_IDChanging(System.Nullable<int> value);
+    partial void Onbatch_IDChanged();
+    partial void Onmime_senderChanging(string value);
+    partial void Onmime_senderChanged();
+    partial void Onmime_sender_nameChanging(string value);
+    partial void Onmime_sender_nameChanged();
+    partial void Onmime_from_listChanging(string value);
+    partial void Onmime_from_listChanged();
+    partial void Onmime_from_name_listChanging(string value);
+    partial void Onmime_from_name_listChanged();
+    partial void Onmime_cc_listChanging(string value);
+    partial void Onmime_cc_listChanged();
+    partial void Onmime_bcc_listChanging(string value);
+    partial void Onmime_bcc_listChanged();
+    partial void Onmime_textpartChanging(string value);
+    partial void Onmime_textpartChanged();
+    partial void Onmime_htmlpartChanging(string value);
+    partial void Onmime_htmlpartChanged();
+    partial void Onmime_subjectChanging(string value);
+    partial void Onmime_subjectChanged();
+    #endregion
+		
 		public smtp_mail_batch_detail()
 		{
+			this._smtp_mail_batch = default(EntityRef<smtp_mail_batch>);
+			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_mail_id", DbType="VarChar(50)")]
-		public string mail_id
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int ID
 		{
 			get
 			{
-				return this._mail_id;
+				return this._ID;
 			}
 			set
 			{
-				if ((this._mail_id != value))
+				if ((this._ID != value))
 				{
-					this._mail_id = value;
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_smtp_batch_ID", DbType="Int NOT NULL")]
-		public int smtp_batch_ID
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_batch_ID", DbType="Int")]
+		public System.Nullable<int> batch_ID
 		{
 			get
 			{
-				return this._smtp_batch_ID;
+				return this._batch_ID;
 			}
 			set
 			{
-				if ((this._smtp_batch_ID != value))
+				if ((this._batch_ID != value))
 				{
-					this._smtp_batch_ID = value;
+					if (this._smtp_mail_batch.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onbatch_IDChanging(value);
+					this.SendPropertyChanging();
+					this._batch_ID = value;
+					this.SendPropertyChanged("batch_ID");
+					this.Onbatch_IDChanged();
 				}
 			}
 		}
@@ -343,7 +652,11 @@ namespace smtp_client
 			{
 				if ((this._mime_sender != value))
 				{
+					this.Onmime_senderChanging(value);
+					this.SendPropertyChanging();
 					this._mime_sender = value;
+					this.SendPropertyChanged("mime_sender");
+					this.Onmime_senderChanged();
 				}
 			}
 		}
@@ -359,7 +672,11 @@ namespace smtp_client
 			{
 				if ((this._mime_sender_name != value))
 				{
+					this.Onmime_sender_nameChanging(value);
+					this.SendPropertyChanging();
 					this._mime_sender_name = value;
+					this.SendPropertyChanged("mime_sender_name");
+					this.Onmime_sender_nameChanged();
 				}
 			}
 		}
@@ -375,7 +692,11 @@ namespace smtp_client
 			{
 				if ((this._mime_from_list != value))
 				{
+					this.Onmime_from_listChanging(value);
+					this.SendPropertyChanging();
 					this._mime_from_list = value;
+					this.SendPropertyChanged("mime_from_list");
+					this.Onmime_from_listChanged();
 				}
 			}
 		}
@@ -391,39 +712,11 @@ namespace smtp_client
 			{
 				if ((this._mime_from_name_list != value))
 				{
+					this.Onmime_from_name_listChanging(value);
+					this.SendPropertyChanging();
 					this._mime_from_name_list = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_mime_to_list", DbType="VarChar(1024)")]
-		public string mime_to_list
-		{
-			get
-			{
-				return this._mime_to_list;
-			}
-			set
-			{
-				if ((this._mime_to_list != value))
-				{
-					this._mime_to_list = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_mime_to_name_list", DbType="VarChar(1024)")]
-		public string mime_to_name_list
-		{
-			get
-			{
-				return this._mime_to_name_list;
-			}
-			set
-			{
-				if ((this._mime_to_name_list != value))
-				{
-					this._mime_to_name_list = value;
+					this.SendPropertyChanged("mime_from_name_list");
+					this.Onmime_from_name_listChanged();
 				}
 			}
 		}
@@ -439,7 +732,11 @@ namespace smtp_client
 			{
 				if ((this._mime_cc_list != value))
 				{
+					this.Onmime_cc_listChanging(value);
+					this.SendPropertyChanging();
 					this._mime_cc_list = value;
+					this.SendPropertyChanged("mime_cc_list");
+					this.Onmime_cc_listChanged();
 				}
 			}
 		}
@@ -455,23 +752,11 @@ namespace smtp_client
 			{
 				if ((this._mime_bcc_list != value))
 				{
+					this.Onmime_bcc_listChanging(value);
+					this.SendPropertyChanging();
 					this._mime_bcc_list = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_mime_attachment_list", DbType="VarChar(1024)")]
-		public string mime_attachment_list
-		{
-			get
-			{
-				return this._mime_attachment_list;
-			}
-			set
-			{
-				if ((this._mime_attachment_list != value))
-				{
-					this._mime_attachment_list = value;
+					this.SendPropertyChanged("mime_bcc_list");
+					this.Onmime_bcc_listChanged();
 				}
 			}
 		}
@@ -487,7 +772,11 @@ namespace smtp_client
 			{
 				if ((this._mime_textpart != value))
 				{
+					this.Onmime_textpartChanging(value);
+					this.SendPropertyChanging();
 					this._mime_textpart = value;
+					this.SendPropertyChanged("mime_textpart");
+					this.Onmime_textpartChanged();
 				}
 			}
 		}
@@ -503,7 +792,11 @@ namespace smtp_client
 			{
 				if ((this._mime_htmlpart != value))
 				{
+					this.Onmime_htmlpartChanging(value);
+					this.SendPropertyChanging();
 					this._mime_htmlpart = value;
+					this.SendPropertyChanged("mime_htmlpart");
+					this.Onmime_htmlpartChanged();
 				}
 			}
 		}
@@ -519,8 +812,66 @@ namespace smtp_client
 			{
 				if ((this._mime_subject != value))
 				{
+					this.Onmime_subjectChanging(value);
+					this.SendPropertyChanging();
 					this._mime_subject = value;
+					this.SendPropertyChanged("mime_subject");
+					this.Onmime_subjectChanged();
 				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="smtp_mail_batch_smtp_mail_batch_detail", Storage="_smtp_mail_batch", ThisKey="batch_ID", OtherKey="ID", IsForeignKey=true)]
+		public smtp_mail_batch smtp_mail_batch
+		{
+			get
+			{
+				return this._smtp_mail_batch.Entity;
+			}
+			set
+			{
+				smtp_mail_batch previousValue = this._smtp_mail_batch.Entity;
+				if (((previousValue != value) 
+							|| (this._smtp_mail_batch.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._smtp_mail_batch.Entity = null;
+						previousValue.smtp_mail_batch_details.Remove(this);
+					}
+					this._smtp_mail_batch.Entity = value;
+					if ((value != null))
+					{
+						value.smtp_mail_batch_details.Add(this);
+						this._batch_ID = value.ID;
+					}
+					else
+					{
+						this._batch_ID = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("smtp_mail_batch");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
 	}

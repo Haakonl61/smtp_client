@@ -1,5 +1,2 @@
-Intro
-Body line 1
-Body line 2
-
-Greetings
+Dear Client,
+This report shows a summary of the cost and charges you have paid in relation to the investment services delivered to you by ABG Sundal Collier ASA for the specified period. The report is for informational purposes only.

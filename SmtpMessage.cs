@@ -14,9 +14,9 @@ namespace smtp_client
         private string mailpartsFolder = Settings.Default.MailpartsFolderPath;
         //@"\source_files\smtp_client\mailparts";
 
-        public TextPart CreateHtmlPart()
+        public TextPart CreateHtmlPart(string filePath)
         {
-            string part = File.ReadAllText(mailpartsFolder + "\\html_part.txt");
+            string part = File.ReadAllText(filePath.ToString());
             if (!string.IsNullOrEmpty(part))
             {
                 var hp = new TextPart("HTML")
@@ -28,9 +28,9 @@ namespace smtp_client
             return new TextPart();
         }
 
-        public TextPart CreateTextPart()
+        public TextPart CreateTextPart(string filePath)
         {
-            string part = File.ReadAllText(mailpartsFolder + "\\text_part.txt");
+            string part = File.ReadAllText(filePath.ToString());
             if (!string.IsNullOrEmpty(part))
             {
                 var tp = new TextPart("Plain") {
@@ -44,7 +44,7 @@ namespace smtp_client
 
         public MimePart CreateAttachment(string attachmentPath)
         {
-            var attachment = new MimePart("application", "pdf")
+              var attachment = new MimePart("application", "pdf")
             {
                 Content = new MimeContent(File.OpenRead(attachmentPath), ContentEncoding.Default),
                 ContentDisposition = new ContentDisposition(ContentDisposition.Attachment),
@@ -56,8 +56,8 @@ namespace smtp_client
 
         public void CreateMessage(string textpart, string htmlpart, string attachments)
         {
-            var _textpart = CreateTextPart();
-            var _htmlpart = CreateHtmlPart();
+            var _textpart = CreateTextPart(textpart);
+            var _htmlpart = CreateHtmlPart(htmlpart);
             //var attachment = CreateAttachment(mailpartsFolder + "\\annotate.pdf");
             var attachment = CreateAttachment(attachments);
 

@@ -39,8 +39,8 @@ namespace smtp_client
 
             SQLStuff sql = new SQLStuff();
 
-            var batch = sql.ctx.smtp_mail_batches.First(b => b.ID == 1);
-
+            var batch = sql.ctx.smtp_mail_batches.First(b => b.ID == Settings.Default.MailBatchId);
+            var batchDetails = sql.ctx.smtp_mail_batch_details.First(bd => bd.batch_ID == batch.ID);
 
             var clientService = new SmtpClient(batch.smtp_server_host, batch.smtp_port.GetValueOrDefault(25), batch.smtp_user, batch.smtp_password);
 
@@ -59,16 +59,16 @@ namespace smtp_client
                 return;
             }
 
-            var emails = sql.ctx.smtp_mail_batch_details.Where(b => b.smtp_batch_ID == batch.ID);
+            var emails = sql.ctx.smtp_mail_details.Where(m => m.smtp_mail_batch_id == batch.ID);
 
             foreach(var email in emails)
             {
                 var message = new SmtpMessage();
-                message.CreateMessage(email.mime_textpart, email.mime_htmlpart, email.mime_attachment_list); //create MimeMessage
-                message.mimeMessage.Sender = new MimeKit.MailboxAddress(email.mime_sender_name, email.mime_sender);
-                message.mimeMessage.To.Add(new MimeKit.MailboxAddress(email.mime_to_name_list, email.mime_to_list));
-                message.mimeMessage.From.Add(new MimeKit.MailboxAddress(email.mime_from_name_list, email.mime_from_list));
-                message.mimeMessage.Subject = email.mime_subject;
+                message.CreateMessage(batchDetails.mime_textpart, batchDetails.mime_htmlpart, email.mime_attachment_list); //create MimeMessage
+                message.mimeMessage.Sender = new MimeKit.MailboxAddress(batchDetails.mime_sender_name, batchDetails.mime_sender);
+                message.mimeMessage.To.Add(new MimeKit.MailboxAddress(email.mime_mail_to_name_list, email.mime_mail_to_list));
+                message.mimeMessage.From.Add(new MimeKit.MailboxAddress(batchDetails.mime_from_name_list, batchDetails.mime_from_list));
+                message.mimeMessage.Subject = batchDetails.mime_subject;
 
                 //message.mimeMessage.Sender = new MimeKit.MailboxAddress("haakon", "haakonstilbud@gmail.com");
                 //message.mimeMessage.To.Add(new MimeKit.MailboxAddress("haakon", "haakonstilbud@gmail.com"));

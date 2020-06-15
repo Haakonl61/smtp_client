@@ -41,5 +41,14 @@ namespace smtp_client {
                 return ((string)(this["ABGSC_DWConnectionString"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int MailBatchId {
+            get {
+                return ((int)(this["MailBatchId"]));
+            }
+        }
     }
 }
